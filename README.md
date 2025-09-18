@@ -1,5 +1,6 @@
 ## Hi there 👋
 
+- I,m curently learning ![Python](https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg)
 <!--
 **Ndaru7/Ndaru7** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
 
