@@ -1,6 +1,7 @@
 ## Hi there 👋
 
-- I,m curently learning <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" width="20" height"20"/>
+
+### I,m curently learning <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" width="20" height"20">
 <!--
 **Ndaru7/Ndaru7** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
 
