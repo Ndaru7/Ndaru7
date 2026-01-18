@@ -1,0 +1,228 @@
+{
+  "layer": "top", // Waybar at top layer
+  "position": "top", // Waybar position (top|bottom|left|right)
+  "height": 16, // Waybar height (to be removed for auto height)
+  // "width": 1280, // Waybar width
+  "spacing": 8, // Gaps between modules (4px)
+  "margin-top": 8,
+  "margin-left": 8,
+  "margin-right": 8,
+  "mode": "dock",
+  "reload_style_on_change": true,
+  "modules-left": [
+    // "custom/appmenu",
+    "sway/workspaces",
+    "mpris"
+    // "sway/window"
+  ],
+  "modules-center": [
+    // "tray"
+     "clock"
+  ],
+  "modules-right": [
+    "group/network",
+    "group/media",
+    // "backlight",
+    "group/hardware",
+    "battery",
+    "power-profiles-daemon",
+    "custom/notification",
+    "custom/exit"
+  ],
+  "cpu": {
+    "format": " {usage}%",
+    "on-click": "alacritty --command btop"
+  },
+
+  "memory": {
+    "format": " {}%",
+    "on-click": "alacritty --command btop"
+  },
+
+  "disk": {
+    "interval": 30,
+    "format": "D {percentage_used}%",
+    "path": "/",
+    "on-click": "alacritty --command btop"
+  },
+
+  "temperature": {
+    "format": "{icon} {temperatureC}°C",
+    "format-icons": "",
+    "interval": 1,
+    "critical-threshold": 80,
+    "hwmon-path-abs": "/sys/devices/platform/coretemp.0/hwmon",
+    "input-filename": "temp1_input"
+  },
+
+  "group/network": {
+    "orientation": "horizontal",
+    "modules": ["network", "bluetooth"]
+  },
+
+  "group/hardware": {
+    "orientation": "horizontal",
+    "modules": ["cpu", "memory", "temperature"]
+  },
+
+  "power-profiles-daemon": {
+    "format": "{icon}",
+    "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
+    "tooltip": true,
+    "format-icons": {
+      "default": "",
+      "performance": "",
+      "balanced": "",
+      "power-saver": ""
+    }
+  },
+
+  "backlight": {
+      // "device": "acpi_video1",
+      "format": "{percent}% {icon}",
+      "format-icons": ["", "", "", "", "", "", "", "", ""]
+  },
+
+  "custom/appmenu": {
+    "format": "",
+    "on-click": "wofi --show drun",
+    "tooltip": false
+  },
+
+  "custom/exit": {
+    "format": "󰐥",
+    "tooltip-format": "Power Menu",
+    "on-click": "wlogout",
+    "tooltip": false
+  },
+
+  "custom/notification": {
+    "tooltip": false,
+    "format": "{icon}",
+    "format-icons": {
+      "notification": "󱅫",
+      "none": "󰂚",
+      "dnd-notification": "󱅫",
+      "dnd-none": "󰂛",
+      "inhibited-notification": "",
+      "inhibited-none": "",
+      "dnd-inhibited-notification": "",
+      "dnd-inhibited-none": ""
+    },
+    "return-type": "json",
+    "exec-if": "which swaync-client",
+    "exec": "swaync-client -swb",
+    "on-click": "swaync-client -t -sw",
+    "on-click-right": "swaync-client -d -sw",
+    "escape": true
+  },
+
+  "tray": {
+    "icon-size": 24,
+    "spacing": 8
+  },
+
+  "clock": {
+    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+    "format": "󰥔 {0:%H:%M}",
+    "format-alt": "󰥔 {0:%H:%M}   {0:%d-%m-%Y}"
+  },
+
+  "sway/language": {
+    "format": "/ {short}"
+  },
+
+  "network": {
+    "format": "{ifname}",
+    // "format-wifi": " {signalStrength}%  {bandwidthDownBytes}  {bandwidthUpBytes} ",
+    // "format-ethernet": "   {bandwidthDownBytes}  {bandwidthUpBytes} ",
+    "format-wifi": "   {bandwidthTotalBytes}",
+    "format-ethernet": "  {bandwidthTotalBytes}",
+    "format-disconnected": "󰲛 ",
+    "tooltip-format": "  {ifname} via {gwaddri}",
+    "tooltip-format-wifi": "  {essid} ({signalStrength}%)",
+    "tooltip-format-ethernet": "  {ifname} ({ipaddr}/{cidr})",
+    "tooltip-format-disconnected": "Disconnected",
+    "max-length": 50,
+    "interval": 1,
+    "on-click-right": "nm-connection-editor",
+    "on-click": "~/.config/wofi/scripts/wifi.sh"
+  },
+
+  "battery": {
+    "bat": "BAT1",
+    "states": {
+      "good": 95,
+      //"warning": 30,
+      "critical": 30
+    },
+    "format": "{icon}{capacity}%",
+    "format-charging": "󱐋{capacity}%",
+    "format-plugged": " {capacity}%",
+    "format-alt": "{icon} {time}",
+    "format-icons": [" ", " ", " ", " ", " "]
+  },
+
+  "bluetooth": {
+    "format-disabled": "󰂯",
+    // "format-off": "",
+    // "interval": 30,
+    "on-click": "blueman-manager"
+    // "format-no-controller": ""
+  },
+
+  "idle_inhibitor": {
+    "format": "{icon}",
+    "tooltip": true,
+    "format-icons": {
+      "activated": "",
+      "deactivated": ""
+    },
+    "on-click-right": "swaylock"
+  },
+  "pulseaudio": {
+    "format": "{icon} {volume}%",
+    "format-bluetooth": "{volume}% {icon} ",
+    "format-bluetooth-muted": "  {icon} ",
+    "format-muted": "󰖁 ",
+    "format-icons": {
+      "headphone": "",
+      "hands-free": "",
+      "headset": "",
+      "phone": "",
+      "portable": "",
+      "car": "",
+      "default": [" ", " ", " "]
+    },
+    "scroll-step": 5,
+    "on-click-right": "pavucontrol",
+    "on-click": "amixer set Master toggle"
+  },
+  "pulseaudio#mic": {
+    "format": "{icon} {format_source}",
+    "format-source": " {volume}%",
+    "format-source-muted": " ",
+    "on-scroll-up": "amixer set Capture 5%+",
+    "on-scroll-down": "amixer set Capture 5%-",
+    "on-click-right": "pavucontrol",
+    "on-click": "amixer set Capture toggle"
+  },
+
+  "mpris": {
+      "format": "{player_icon} {artist} - {title} ",
+      "format-paused": "{status_icon} {artist} - {title} ",
+      "player-icons": {
+          "spotify": " ",
+          "default": " 󰝚"
+      },
+      "status-icons": {
+          "playing": " 󰏤",
+          "paused": " 󰐊"
+      }
+  },
+
+  "group/media": {
+    "orientation": "horizontal",
+    "modules": ["pulseaudio", "pulseaudio#mic"]
+  }
+}
