@@ -1,4 +1,4 @@
--- Load Plugins secara Native
+-- Load Plugin
 vim.pack.add {
     -- Main plugin
     'https://github.com/nvim-treesitter/nvim-treesitter',
@@ -10,19 +10,13 @@ vim.pack.add {
     'https://github.com/nvim-lua/plenary.nvim',
     "https://github.com/echasnovski/mini.nvim.git",
     "https://github.com/tpope/vim-fugitive",
-
-    -- Colorscheme
-    "https://github.com/folke/tokyonight.nvim",
     "https://github.com/catppuccin/nvim",
 
-    -- Autocompletion (optional) 
-    "https://github.com/hrsh7th/nvim-cmp",
-    "https://github.com/hrsh7th/cmp-nvim-lsp",
-    "https://github.com/hrsh7th/cmp-buffer",
-    "https://github.com/hrsh7th/cmp-path",
+    -- Optional Plugin
+    --
 }
 
--- konifgurasi Dasar
+-- Basic Configuration
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.cursorline = true
@@ -40,67 +34,50 @@ require("catppuccin").setup({
 })
 vim.cmd.colorscheme("catppuccin-nvim")
 
--- vim.cmd.colorscheme("tokyonight")
-
-
 -- Status Line
 require("lualine").setup()
-
-
--- Add filetype
-vim.filetype.add {
-    extension = { 
-	jinja = "jinja",
-	jinja2 = "jinja",
-	j2 = "jinja",
-    }
-}
 
 -- Treesitter 
 require('nvim-treesitter').install { 
     'python',
     'lua',
     'go',
-    'html',
-    'css',
-    'jinja',
 }
 
 -- Oil
 require("oil").setup({
-     keymaps = { ['<C-h>'] = false },
-     columns = { 'size', 'mtime' },
-     delete_to_trash = true,
-     skip_confirm_for_simple_edits = true,
+        keymaps = { ['<C-h>'] = false },
+        columns = { 'size', 'mtime' },
+        delete_to_trash = true,
+        skip_confirm_for_simple_edits = true,
 })
 vim.keymap.set('n', '<leader><leader>', ':Oil<CR>', { silent = true })
 
--- Konfigurasi LSP
+
+-- LSP Configuration
 --
 -- Python
-vim.lsp.config("ty", {
+vim.lsp.config('basedpyright', {
+    cmd = { 'basedpyright-langserver', '--stdio' },
+    filetypes = { 'python' },
+    root_markers = { 'pyproject.toml', 'setup.py', 'setup.cfg', 'requirements.txt', '.git' },
+    capabilities = require('cmp_nvim_lsp').default_capabilities(),
     settings = {
-	ty = {  },
+        basedpyright = {
+            analysis = {
+                typeCheckingMode = "basic",
+                autoImportCompletions = true,
+                diagnosticSeverityOverrides = {
+                    reportUnknownVariableType = "none",
+                    reportUnknownParameterType = "none",
+                    reportAny = "none",
+                },
+            },
+        },
     },
 })
-vim.lsp.enable("ty")
+vim.lsp.enable("basedpyright")
 
--- C (Clangd)
-vim.lsp.config("clangd", {
-    cmd = {"clangd"},
-    filetypes = {"c", "cpp", "objc", "objcpp", "cuda"},
-    root_markers = {".clangd", ".git"}
-})
-vim.lsp.enable("clangd")
-
--- Jinja
-vim.lsp.enable("jinja_lsp")
-
--- HTML
-vim.lsp.config("superhtml", {
-    filetypes = { "html" }
-})
-vim.lsp.enable("superhtml")
 
 -- LSP Keymaps
 vim.api.nvim_create_autocmd('LspAttach', {
@@ -121,34 +98,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end,
 })
 
--- Konfigurasi nvim-cmp
-local cmp = require('cmp')
 
-cmp.setup({
-    window = {
-	completion = cmp.config.window.bordered(),
-	documentation = cmp.config.window.bordered(),
-    },
-    mapping = cmp.mapping.preset.insert({
-        ['<Tab>']     = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
-        ['<S-Tab>']   = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
-        ['<CR>']      = cmp.mapping.confirm({ select = true }),
-        ['<C-Space>'] = cmp.mapping.complete(),
-        ['<C-e>']     = cmp.mapping.abort(),
-    }),
-    sources = cmp.config.sources({
-        { name = 'nvim_lsp' },
-        { name = 'buffer' },
-        { name = 'path' },
-    }),
-
-    -- Hapus baris dibawah untuk mengaktifkan auto trigger
-    -- completion = {
-    --     autocomplete = false,
-    -- },
-})
-
--- Tampilan Diagostik
+-- Diagostic Interface
 vim.diagnostic.config({
     update_in_insert = false, 
     underline = true,
@@ -162,6 +113,7 @@ vim.diagnostic.config({
         prefix = "",
     },
 })
+
 
 vim.api.nvim_create_autocmd('TextYankPost', {
     callback = function() vim.highlight.on_yank() end,
