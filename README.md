@@ -1,7 +1,7 @@
 # **WELCOME TO MY REPOSITORY**
 
 
-I'm just a regular college student interested in computers
+I'm just a regular college student interested in computer science
 
 ## **Learning**
 
@@ -10,16 +10,12 @@ I'm just a regular college student interested in computers
 - Data Science
 - Web Backend
 - A bit about software
-
-<br>
+ 
 <br>
 <br>
 <br>
 
 ## **Languages & Tools**
-
 - Python
 - GO
-- Django
-- Numpy
-- Pandas
+- C (a bit)
